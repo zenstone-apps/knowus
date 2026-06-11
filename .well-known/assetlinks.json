@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.knowus.game",
+    "sha256_cert_fingerprints": ["D6:C1:CF:F2:92:73:F1:B6:88:D0:1E:E5:B4:B9:58:EB:2F:41:2C:60:C0:39:1C:93:B4:DE:D4:61:30:61:A5:2F"]
+  }
+}]
