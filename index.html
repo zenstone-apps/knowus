@@ -35,9 +35,11 @@
       var params = new URLSearchParams(window.location.search);
       var code = params.get('join');
 
+      var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      var isAndroid = /android/i.test(navigator.userAgent);
       var storeBtns = '<div class="store-btns">' +
-        '<a class="btn btn-ios" href="https://apps.apple.com/app/id6763936033">' + appleIcon + ' App Store</a>' +
-        '<a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">' + playIcon + ' Play Store</a>' +
+        (!isAndroid ? '<a class="btn btn-ios" href="https://apps.apple.com/app/id6763936033">' + appleIcon + ' App Store</a>' : '') +
+        (!isIOS ? '<a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">' + playIcon + ' Play Store</a>' : '') +
         '</div>';
 
       if (code) {
