@@ -52,7 +52,11 @@
           '<div class="code">' + code + '</div>' +
           '<div class="desc">' + t.open + '<br>' + t.notInstalled + '</div>' +
           storeBtns;
-        window.location = 'knowus://join/' + code;
+        if (isAndroid) {
+          window.location = 'intent://join/' + code + '#Intent;scheme=knowus;package=com.knowus.game;end';
+        } else {
+          window.location = 'knowus://join/' + code;
+        }
       } else {
         document.getElementById('content').innerHTML =
           '<img class="logo" src="icon.png" onerror="this.style.display=\'none\'" alt="">' +
