@@ -16,59 +16,53 @@
     .btn { display: flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 14px; color: white; font-weight: 700; text-decoration: none; font-size: 0.95rem; }
     .btn-ios { background: #1c1c1e; }
     .btn-android { background: #1a73e8; }
-    .btn svg { flex-shrink: 0; }
   </style>
   <script>
+    var T = {
+      de: { invited: 'Du wurdest eingeladen! Dein Code:', open: 'Öffne die KnowUs App und gib den Code ein.', notInstalled: 'Noch nicht installiert?', tagline: 'Das Spiel das zeigt wer wen wirklich kennt.' },
+      en: { invited: 'You\'ve been invited! Your code:', open: 'Open the KnowUs app and enter the code.', notInstalled: 'Not installed yet?', tagline: 'The game that shows who really knows who.' },
+      es: { invited: '¡Has sido invitado! Tu código:', open: 'Abre la app KnowUs e introduce el código.', notInstalled: '¿Aún no la tienes?', tagline: 'El juego que muestra quién conoce a quién.' },
+      pt: { invited: 'Foste convidado! O teu código:', open: 'Abre a app KnowUs e introduz o código.', notInstalled: 'Ainda não instalaste?', tagline: 'O jogo que mostra quem conhece quem.' },
+      fr: { invited: 'Tu as été invité ! Ton code :', open: 'Ouvre l\'app KnowUs et entre le code.', notInstalled: 'Pas encore installé ?', tagline: 'Le jeu qui révèle qui connaît vraiment qui.' },
+      it: { invited: 'Sei stato invitato! Il tuo codice:', open: 'Apri l\'app KnowUs e inserisci il codice.', notInstalled: 'Non ancora installata?', tagline: 'Il gioco che mostra chi conosce davvero chi.' },
+    };
+    var appleIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>';
+    var playIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l15 8.5c.6.34.6 1.26 0 1.6l-15 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>';
+
     window.onload = function() {
+      var lang = (navigator.language || navigator.userLanguage || 'en').substring(0, 2);
+      var t = T[lang] || T.en;
       var params = new URLSearchParams(window.location.search);
       var code = params.get('join');
+
+      var storeBtns = '<div class="store-btns">' +
+        '<a class="btn btn-ios" href="https://apps.apple.com/app/id6744237249">' + appleIcon + ' App Store</a>' +
+        '<a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">' + playIcon + ' Play Store</a>' +
+        '</div>';
+
       if (code) {
         code = code.toUpperCase();
-        document.getElementById('code').textContent = code;
-        document.getElementById('join-section').style.display = 'block';
-        document.getElementById('home-section').style.display = 'none';
+        document.getElementById('content').innerHTML =
+          '<img class="logo" src="icon.png" onerror="this.style.display=\'none\'" alt="">' +
+          '<h1>KnowUs</h1>' +
+          '<div class="subtitle">Who Knows Who?</div>' +
+          '<div class="desc">' + t.invited + '</div>' +
+          '<div class="code">' + code + '</div>' +
+          '<div class="desc">' + t.open + '<br>' + t.notInstalled + '</div>' +
+          storeBtns;
         window.location = 'knowus://join/' + code;
       } else {
-        document.getElementById('join-section').style.display = 'none';
-        document.getElementById('home-section').style.display = 'block';
+        document.getElementById('content').innerHTML =
+          '<img class="logo" src="icon.png" onerror="this.style.display=\'none\'" alt="">' +
+          '<h1>KnowUs</h1>' +
+          '<div class="subtitle">Who Knows Who?</div>' +
+          '<div class="desc">' + t.tagline + '</div>' +
+          storeBtns;
       }
     };
   </script>
 </head>
 <body>
-  <div id="join-section" style="display:none">
-    <img class="logo" src="https://zenstone-apps.github.io/knowus/icon.png" onerror="this.style.display='none'" alt="">
-    <h1>KnowUs</h1>
-    <div class="subtitle">Who Knows Who?</div>
-    <div class="desc">Du wurdest eingeladen! Dein Code:</div>
-    <div class="code" id="code"></div>
-    <div class="desc">Öffne die KnowUs App und gib den Code ein.<br>Noch nicht installiert?</div>
-    <div class="store-btns">
-      <a class="btn btn-ios" href="https://apps.apple.com/app/id6744237249">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        App Store
-      </a>
-      <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l15 8.5c.6.34.6 1.26 0 1.6l-15 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>
-        Play Store
-      </a>
-    </div>
-  </div>
-  <div id="home-section" style="display:none">
-    <img class="logo" src="https://zenstone-apps.github.io/knowus/icon.png" onerror="this.style.display='none'" alt="">
-    <h1>KnowUs</h1>
-    <div class="subtitle">Who Knows Who?</div>
-    <div class="desc">Das Spiel das zeigt wer wen wirklich kennt.</div>
-    <div class="store-btns">
-      <a class="btn btn-ios" href="https://apps.apple.com/app/id6744237249">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        App Store
-      </a>
-      <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3 20.5v-17c0-.83.94-1.3 1.6-.8l15 8.5c.6.34.6 1.26 0 1.6l-15 8.5c-.66.5-1.6.03-1.6-.8z"/></svg>
-        Play Store
-      </a>
-    </div>
-  </div>
+  <div id="content"></div>
 </body>
 </html>
