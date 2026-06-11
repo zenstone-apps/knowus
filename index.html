@@ -2,20 +2,51 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>KnowUs</title>
+  <title>KnowUs — Join Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { margin: 0; background: #0D1F2D; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; color: white; text-align: center; }
-    h1 { font-size: 2rem; margin-bottom: 8px; }
-    p { color: rgba(255,255,255,0.6); }
-    .btn { display: inline-block; margin-top: 20px; padding: 14px 28px; background: #E8604C; border-radius: 14px; color: white; font-weight: 800; text-decoration: none; font-size: 1rem; }
+    body { margin: 0; background: #0D1F2D; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, sans-serif; color: white; text-align: center; padding: 20px; box-sizing: border-box; }
+    h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 4px; }
+    .subtitle { color: rgba(255,255,255,0.5); font-size: 0.95rem; margin-bottom: 32px; }
+    .code { font-size: 3.5rem; font-weight: 900; color: #E8604C; letter-spacing: 10px; margin: 16px 0 24px; }
+    .desc { color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 28px; }
+    .btn { display: inline-block; padding: 14px 28px; border-radius: 14px; color: white; font-weight: 800; text-decoration: none; font-size: 1rem; margin: 6px; }
+    .btn-ios { background: #1c1c1e; }
+    .btn-android { background: #1a73e8; }
   </style>
+  <script>
+    window.onload = function() {
+      var params = new URLSearchParams(window.location.search);
+      var code = params.get('join');
+      if (code) {
+        code = code.toUpperCase();
+        document.getElementById('code').textContent = code;
+        document.getElementById('join-section').style.display = 'block';
+        document.getElementById('home-section').style.display = 'none';
+        window.location = 'knowus://join/' + code;
+      } else {
+        document.getElementById('join-section').style.display = 'none';
+        document.getElementById('home-section').style.display = 'block';
+      }
+    };
+  </script>
 </head>
 <body>
-  <div>
-    <h1>KnowUs</h1>
-    <p>Who Knows Who?</p>
-    <a class="btn" href="https://apps.apple.com/app/knowus/id6744237249">Download App</a>
+  <div id="join-section" style="display:none">
+    <h1>🎮 KnowUs</h1>
+    <div class="subtitle">Who Knows Who?</div>
+    <div class="desc">Du wurdest eingeladen! Dein Code:</div>
+    <div class="code" id="code"></div>
+    <div class="desc">Öffne die KnowUs App und gib den Code ein.<br>Noch nicht installiert?</div>
+    <a class="btn btn-ios" href="https://apps.apple.com/app/id6744237249">🍎 App Store</a>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">▶ Play Store</a>
+  </div>
+  <div id="home-section" style="display:none">
+    <h1>🎮 KnowUs</h1>
+    <div class="subtitle">Who Knows Who?</div>
+    <div class="desc">Das Spiel das zeigt wer wen wirklich kennt.</div>
+    <a class="btn btn-ios" href="https://apps.apple.com/app/id6744237249">🍎 App Store</a>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.knowus.game">▶ Play Store</a>
   </div>
 </body>
 </html>
